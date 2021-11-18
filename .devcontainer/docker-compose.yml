@@ -1,0 +1,15 @@
+version: "2.0"
+services:
+    tensorflow:
+        image: python3.6-tensorflow:latest
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+            - $HOME/.Xauthority:/root/.Xauthority:rw
+        environment:
+            - DISPLAY=$DISPLAY
+            - QT_X11_NO_MITSHM=1
+        devices:
+            - /dev/dri:/dev/dri
+        privileged: true
+        tty: true
+        network_mode: "host"

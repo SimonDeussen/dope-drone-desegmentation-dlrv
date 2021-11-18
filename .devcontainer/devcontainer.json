@@ -1,0 +1,13 @@
+{
+	"name": "Python 3.6 Tensorflow Environment",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "tensorflow",
+	"workspaceFolder": "/home/",
+	"shutdownAction": "stopCompose",
+	"extensions":[
+		"ms-vsliveshare.vsliveshare",
+		"ms-python.vscode-pylance",
+		"ms-python.python",
+		"njpwerner.autodocstring"
+	]
+}
