@@ -20,7 +20,7 @@
 
 % Options
 \DeclareOption{onecolumn}{\OptionNotUsed}
-\DeclareOption{thesis}{\project{Master Thesis Proposal}}
+% \DeclareOption{thesis}{\project{Master Thesis Proposal}}
 \DeclareOption{rnd}{\project{R\&D Project Proposal}}
 
 % Report options
