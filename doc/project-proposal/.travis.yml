@@ -1,0 +1,19 @@
+sudo: required
+dist: trusty
+before_install:
+  - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive
+    texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended
+    latex-xcolor
+script:
+  - mkdir _build
+  - pdflatex -interaction=nonstopmode -halt-on-error -output-directory _build *.tex
+  - rm -rf _build
+  - zip -r MAS-project-proposal.zip .
+deploy:
+  provider: releases
+  api_key:
+    secure: PksKkmsJxtUbGdHXxB1TxG3MfyDP4IHRK0UKES7DOO/vybZO9aW57wK24JRD+GE0JhmVZI9KsIqwj+qRogbRIVeG9ohgf7VYjpLtGF8zSOrEK98hR3IfM/vObVed/vHSZvr644/YEoay3JfVpugVJF3RoHdDHRM6j3akCpgM5w2ADpt5bkYSmwAiZzeLLxWyc6WepMfykHaGniQbxV0OIFm1czUqD6a5nxIerd/hE8H60QMZeUFR5pY1HiJ9hxMmme1ob+7jc7vrWIn2ZnD5g8gjOEVZoBV0zDK71AF6NJG5MjuGou80O4JkLlKrg/KsbqpKcDWzMxmXgzGoNGfyV9NP6rfju2UdwuQ/pWZv3fIeUEQIUEtMKA1q+TsG2YHHCKlanwg9P5PGXg14c55FFkM3Ealnx9ihh3fbFkiVF3nGQXt2YOJLj91r2vy6j79IO9374H+tx6cRSUKt1dJawIRWV2FckfssgSvBufn/WpHJLFP0w1Ela5PLAdZh1mcph16nNzn86ZegeW9MxxS7zRn5K0LLQCmUWlCu+x5E8ucaxmRDObebJnts7+cdqVACwNNkep0HccCWs7EZxFDEgZ5gV74shljV/+NQX33TnN2jKTDsf5kpUZBm40dOuaqeY4zUQYcGlyfsWli2taHL5PRRcEAte5nAIFT261YY2eM=
+  file: MAS-project-proposal.zip
+  skip_cleanup: true
+  on:
+    tags: true
