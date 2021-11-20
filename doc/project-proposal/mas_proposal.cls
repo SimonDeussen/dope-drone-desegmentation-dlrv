@@ -21,7 +21,7 @@
 % Options
 \DeclareOption{onecolumn}{\OptionNotUsed}
 % \DeclareOption{thesis}{\project{Master Thesis Proposal}}
-\DeclareOption{rnd}{\project{R\&D Project Proposal}}
+\DeclareOption{rnd}{\project{DLRV Project proposal}}
 
 % Report options
 % \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
