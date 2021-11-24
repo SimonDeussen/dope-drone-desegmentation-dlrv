@@ -5,6 +5,8 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 
+
+
 \title{Semantic Segmentation of aerial images of forest scenery}
 \author{Malika Navaratna, Urvashi Negi, Zain Ul Haq, Simon Deussen}
 \supervisors{Prof. Sebastian Houben}
@@ -50,19 +52,25 @@
 \subsection{Project Plan}
 
     \subsection{Models and tools}
+    \begin{itemize}
+        \item U-Net is the classical segmentatic segmantion architecture, builds on top of a fully convolutional network, but prevents the loss of resolution in the resulting masks.
+        \item Mark RNN another important architecture combining Faster RCNN and a Fully convolutional network for segmentation
+    \end{itemize}
 
+   
     \subsection{Data sets}
+    \begin{description}
+        \item[Forest Segmenation] Contains 5108 Images (256x256) and maks for forest segmentation
+        \item[Satellite terrain] A bit more complicated, contains huge amount of satellite images in different bands. We have to check if they are usable in our context (drone images) Contain 10 classes including road, track, trees, crops...
+        \item[UAVID dataset] Drone dataset, ;abels contain Road Tree Vegetation BUT its more urban areas
+    \end{description}
 
     \subsection{Potential problems}
+    \begin{description}
+        \item[Computational capacity] Working with images is always computational expensive. We might be able to use simons GPU, but this is not setup yet. Even then, there is the problem with accessing this async.
+        \item[Dataset combination] Combination of dataset to get enough data and enough labels is probable the hardest part.
+    \end{description}
     
-
-
-\section{Related Work}
-\begin{itemize}
-    \item What have other people done?
-    \item Why is it not sufficient?
-\end{itemize}
-
 
 
 
