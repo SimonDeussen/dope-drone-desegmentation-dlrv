@@ -48,7 +48,9 @@
             \item Roads(dirt and tarmac)
         \end{itemize}
 
-    \subsection{Models and tools}
+    \section{Methods and tools}
+
+    \subsection{Models}
     \begin{itemize}
         \item U-Net is the classical semantic segmentation architecture, builds on top of a fully convolutional network, but prevents the loss of resolution in the resulting masks.\cite{umar2021forest}
         \item Mark RNN another important architecture combining Faster RCNN and a Fully convolutional network for segmentation \cite{he2018mask}
@@ -70,6 +72,10 @@
         \item[Dataset combination] Combination of dataset to get enough data and enough labels is probable the hardest part.
     \end{description}
     
+
+    \section{Goal}
+
+    Our goal is to train and modify one of the existing networks for semantic segmentation on the given forest data. A minimal result should be the segmentation of forest vs. non-forest areas in the given images, but the goal is to be able to provide segmentation for all five classes.
 
 
 

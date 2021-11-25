@@ -194,7 +194,7 @@ Supervised by\par
     \fancyhf{}
     \renewcommand*\headrulewidth{0pt}
     \renewcommand*\footrulewidth{0pt}
-    \fancyfoot[L]{\color{darkgray}\footnotesize\@author}
+    % \fancyfoot[L]{\color{darkgray}\footnotesize\@author}
     \fancyhead[C]{\color{darkgray}\footnotesize\@title}
     \fancyfoot[C]{\color{darkgray}\footnotesize\thepage}
     \fancyfoot[R]{\color{darkgray}\footnotesize\@project}
