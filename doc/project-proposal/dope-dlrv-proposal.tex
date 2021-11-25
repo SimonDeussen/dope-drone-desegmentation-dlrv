@@ -12,7 +12,6 @@
 \supervisors{Prof. Sebastian Houben}
 \date{November 2021}
 
-% \thirdpartylogo{path/to/your/image}
 
 \begin{document}
 
@@ -53,31 +52,32 @@
 
     \subsection{Models and tools}
     \begin{itemize}
-        \item U-Net is the classical segmentatic segmantion architecture, builds on top of a fully convolutional network, but prevents the loss of resolution in the resulting masks.
-        \item Mark RNN another important architecture combining Faster RCNN and a Fully convolutional network for segmentation
-    \end{itemize}
+        \item U-Net is the classical semantic segmentation architecture, builds on top of a fully convolutional network, but prevents the loss of resolution in the resulting masks.\cite{umar2021forest}
+        \item Mark RNN another important architecture combining Faster RCNN and a Fully convolutional network for segmentation 
+        \item Swin transformer is another architecture that was proved to be successfully. The paper \cite{guerin2021satellite} has shared the code of their implementation, in which they performed segmentation of forest scenery captured by satellites.
+        \end{itemize}
 
    
     \subsection{Data sets}
     \begin{description}
-        \item[Forest Segmenation] Contains 5108 Images (256x256) and maks for forest segmentation
+        \item[Forest Segmentation] Contains 5108 Images (256x256) and mask for forest segmentation
         \item[Satellite terrain] A bit more complicated, contains huge amount of satellite images in different bands. We have to check if they are usable in our context (drone images) Contain 10 classes including road, track, trees, crops...
-        \item[UAVID dataset] Drone dataset, ;abels contain Road Tree Vegetation BUT its more urban areas
+        \item[UAVID dataset] Drone dataset, labels contain Road Tree Vegetation BUT its more urban areas
     \end{description}
 
     \subsection{Potential problems}
     \begin{description}
-        \item[Computational capacity] Working with images is always computational expensive. We might be able to use simons GPU, but this is not setup yet. Even then, there is the problem with accessing this async.
+        \item[Computational capacity] Working with images is always computational expensive. We might be able to use our team member Simon's high performance GPU, but this is not setup yet. Even then, there is the problem with accessing this async.
         \item[Dataset combination] Combination of dataset to get enough data and enough labels is probable the hardest part.
     \end{description}
     
 
 
 
-\nocite{*}
 
-\bibliographystyle{plainnat} % Use the plainnat bibliography style
-\bibliography{bibliography.bib} % Use the bibliography.bib file as the source of references
+
+\bibliographystyle{ieeetr} % Use the plainnat bibliography style
+\bibliography{bibliography.bib} 
 
 
 

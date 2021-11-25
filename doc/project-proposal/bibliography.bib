@@ -39,7 +39,6 @@
   publisher = {Springer},
 }
 
-
 @InProceedings{umar2021forest,
   author  = {Umar, Muhammad and Saheer, Lakshmi Babu and Zarrin, Javad},
   title   = {Forest Terrain Identification using Semantic Segmentation on UAV Images},
@@ -47,4 +46,56 @@
   file    = {:pdfs/forest_beaver_seg.pdf:PDF},
   journal = {ICML 2021 Workshop on Tackling Climate Change with Machine Learning},
   url     = {https://www.climatechange.ai/papers/icml2021/9},
+}
+
+@Misc{ronneberger2015unet,
+  author        = {Olaf Ronneberger and Philipp Fischer and Thomas Brox},
+  title         = {U-Net: Convolutional Networks for Biomedical Image Segmentation},
+  year          = {2015},
+  archiveprefix = {arXiv},
+  eprint        = {1505.04597},
+  file          = {:pdfs/1505.04597.pdf:PDF},
+  primaryclass  = {cs.CV},
+}
+
+@InProceedings{Park2019,
+  author       = {Seong Wook Park and Yang Won Lee},
+  booktitle    = {Image and Signal Processing for Remote Sensing XXV},
+  title        = {{Detection of forest disaster using satellite images with semantic segmentation}},
+  year         = {2019},
+  editor       = {Lorenzo Bruzzone and Francesca Bovolo},
+  organization = {International Society for Optics and Photonics},
+  pages        = {551 -- 557},
+  publisher    = {SPIE},
+  volume       = {11155},
+  abstract     = {In recent 10 years, forest damage caused by forest fires in Korea has increased significantly compared to previous years. Therefore, interest and concern about damage caused by forest fires are very important in terms of environmental and ecosystem. According to various domestic and international research results, forests perform functions such as reporting of life resources, prevention of desertification, and adjustment of micro climate. There are many studies to extract the damage areas based on hyper spectral aerial image, high resolution satellite image, vegetation index and factors affecting the forest environment. However, there are limitations that the indexes have different threshold values depending on the region and season, and the threshold value must be continuously adjusted in order to detect the concentration of the damage areas. In this study, we detected forest disaster damaged areas through satellite image data and deep learning. We collected image data on Landsat satellite and applied to the detection of damaged area using U-net [1] and SegNet [2] models. We tried to verify the applicability of semantic segmentation for remote sensing, compare and evaluate each model, and build an optimal forest disaster detection model.},
+  comment      = {This one could be useful.},
+  doi          = {10.1117/12.2532990},
+  keywords     = {Forest disaster, Remote sensing, Satellite Images, Semantic segmentation},
+  url          = {https://doi.org/10.1117/12.2532990},
+}
+
+@Misc{guerin2021satellite,
+  author        = {Eric Guérin and Killian Oechslin and Christian Wolf and Benoît Martinez},
+  title         = {Satellite Image Semantic Segmentation},
+  year          = {2021},
+  archiveprefix = {arXiv},
+  eprint        = {2110.05812},
+  file          = {:pdfs/2110.05812.pdf:PDF},
+  primaryclass  = {cs.CV},
+}
+
+@Article{7803544,
+  author   = {Badrinarayanan, Vijay and Kendall, Alex and Cipolla, Roberto},
+  journal  = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  title    = {SegNet: A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation},
+  year     = {2017},
+  issn     = {1939-3539},
+  month    = {Dec},
+  number   = {12},
+  pages    = {2481-2495},
+  volume   = {39},
+  abstract = {We present a novel and practical deep fully convolutional neural network architecture for semantic pixel-wise segmentation termed SegNet. This core trainable segmentation engine consists of an encoder network, a corresponding decoder network followed by a pixel-wise classification layer. The architecture of the encoder network is topologically identical to the 13 convolutional layers in the VGG16 network [1] . The role of the decoder network is to map the low resolution encoder feature maps to full input resolution feature maps for pixel-wise classification. The novelty of SegNet lies is in the manner in which the decoder upsamples its lower resolution input feature map(s). Specifically, the decoder uses pooling indices computed in the max-pooling step of the corresponding encoder to perform non-linear upsampling. This eliminates the need for learning to upsample. The upsampled maps are sparse and are then convolved with trainable filters to produce dense feature maps. We compare our proposed architecture with the widely adopted FCN [2] and also with the well known DeepLab-LargeFOV [3] , DeconvNet [4] architectures. This comparison reveals the memory versus accuracy trade-off involved in achieving good segmentation performance. SegNet was primarily motivated by scene understanding applications. Hence, it is designed to be efficient both in terms of memory and computational time during inference. It is also significantly smaller in the number of trainable parameters than other competing architectures and can be trained end-to-end using stochastic gradient descent. We also performed a controlled benchmark of SegNet and other architectures on both road scenes and SUN RGB-D indoor scene segmentation tasks. These quantitative assessments show that SegNet provides good performance with competitive inference time and most efficient inference memory-wise as compared to other architectures. We also provide a Caffe implementation of SegNet and a web demo at http://mi.eng.cam.ac.uk/projects/segnet/.},
+  doi      = {10.1109/TPAMI.2016.2644615},
+  file     = {:pdfs/SegNet_A_Deep_Convolutional_Encoder-Decoder_Architecture_for_Image_Segmentation.pdf:PDF},
 }
