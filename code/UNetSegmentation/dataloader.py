@@ -1,10 +1,9 @@
 import torch
-from torch.utils import data
+from torch.utils.data import Dataset
 import cv2
 
 
-
-class DataSet(data.Dataset):    
+class DataSet(Dataset):    
 
     def __init__(self,
                 imagePaths:list,
@@ -18,8 +17,8 @@ class DataSet(data.Dataset):
         self.imagePaths=imagePaths
         self.maskPaths=maskPaths
         self.transforms=transforms
-        self.inputs_dtype = torch.float32
-        self.targets_dtype = torch.long
+        # self.inputs_dtype = torch.float32
+        # self.targets_dtype = torch.long
 
 
     def __len__(self):
@@ -35,14 +34,10 @@ class DataSet(data.Dataset):
         image=cv2.imread(imagePath)
         image=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
         mask=cv2.imread(self.maskPaths[index],0)
-
         if self.transforms is not None:
             image=self.transforms(image)
             mask=self.transforms(mask)
-
-
-                    
-
+            
 
         return (image,mask)
 

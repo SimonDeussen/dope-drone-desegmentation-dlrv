@@ -1,5 +1,4 @@
-# from torch._C import _set_mkldnn_enabled
-from . import utilities
+from UNetSegmentation import utilities
 from torch.nn import ConvTranspose2d
 from torch.nn import Conv2d
 from torch.nn import MaxPool2d
@@ -15,11 +14,11 @@ class Block(Module):
 
     def __init__(self,
                 inChannels,
-                outChannels) -> None:
+                outChannels):
         super().__init__()
         self.conv1=Conv2d(inChannels,outChannels,3)
         self.relu=ReLU()
-        self.conv2=Conv2d(inChannels,outChannels,3)
+        self.conv2=Conv2d(outChannels,outChannels,3)
 
 
     def forward(self,x):
@@ -31,13 +30,13 @@ class Block(Module):
 
 
 class Encoder(Module):
-    def __init__(self,channels=(3,16,32,64)) -> None:
+    def __init__(self,channels: tuple):
         super().__init__()
         #store the encoder block and maxpool layer 
+        ## The encBlocks will be used again in decoder as well
         self.encBlocks = ModuleList(
 			[Block(channels[i], channels[i + 1])
-			 	for i in range(len(channels)-1)]
-        )
+			 	for i in range(len(channels)-1)])
         self.pool =MaxPool2d(2)
 
 
@@ -55,7 +54,7 @@ class Encoder(Module):
 
 
 class Decoder(Module):
-    def __init__(self,channels=(64,32,16)) -> None:
+    def __init__(self,channels: tuple):
         super().__init__()
         self.channels = channels
         ##The decoder part that used transpose convolution
@@ -95,16 +94,17 @@ class Decoder(Module):
         return encFeatures
 
 class UNet(Module):
+
     '''
     The UNet architecture based on the sumodules 
     '''
     def __init__(self,encChannels=(3, 16, 32, 64),
 		 decChannels=(64, 32, 16),
 		 nbClasses=1, retainDim=True,
-		 outSize=(utilities.INPUT_IMAGE_HEIGHT,  utilities.INPUT_IMAGE_WIDTH)) -> None:
+		 outSize=(utilities.INPUT_IMAGE_HEIGHT,  utilities.INPUT_IMAGE_WIDTH)):
          super().__init__()
          self.encoder=Encoder(encChannels)
-         self.decoder=Decoder(encChannels)
+         self.decoder=Decoder(decChannels)
 
          #Initialize the regression head store the class variables 
          ## check the kernal size 
@@ -117,8 +117,7 @@ class UNet(Module):
         encFeatures = self.encoder(x)
 		# pass the encoder features through decoder making sure that
 		# their dimensions are suited for concatenation
-        decFeatures = self.decoder(encFeatures[::-1][0],
-			encFeatures[::-1][1:])
+        decFeatures = self.decoder(encFeatures[::-1][0],encFeatures[::-1][1:])
 		# pass the decoder features through the regression head to
 		# obtain the segmentation mask
         map = self.head(decFeatures)
