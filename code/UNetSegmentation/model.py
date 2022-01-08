@@ -1,4 +1,4 @@
-from torch._C import _set_mkldnn_enabled
+# from torch._C import _set_mkldnn_enabled
 from . import utilities
 from torch.nn import ConvTranspose2d
 from torch.nn import Conv2d
@@ -31,7 +31,7 @@ class Block(Module):
 
 
 class Encoder(Module):
-    def __init__(self,channels=[3,16,32,64]) -> None:
+    def __init__(self,channels=(3,16,32,64)) -> None:
         super().__init__()
         #store the encoder block and maxpool layer 
         self.encBlocks = ModuleList(
@@ -55,7 +55,7 @@ class Encoder(Module):
 
 
 class Decoder(Module):
-    def __init__(self,channels=[64,32,16]) -> None:
+    def __init__(self,channels=(64,32,16)) -> None:
         super().__init__()
         self.channels = channels
         ##The decoder part that used transpose convolution

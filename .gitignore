@@ -1,6 +1,6 @@
 #Ignore data folder
-./code/data/images
-./code/data/masks
+./code/data/images/*
+./code/data/masks/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

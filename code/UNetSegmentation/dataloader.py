@@ -15,15 +15,15 @@ class DataSet(data.Dataset):
         '''
 
 
-        self.input_paths=imagePaths
-        self.mask_paths=maskPaths
+        self.imagePaths=imagePaths
+        self.maskPaths=maskPaths
         self.transforms=transforms
         self.inputs_dtype = torch.float32
         self.targets_dtype = torch.long
 
 
     def __len__(self):
-        return len(self.input_paths)
+        return len(self.imagePaths)
 
     def __getitem__(self, 
                     index:int):
@@ -31,10 +31,10 @@ class DataSet(data.Dataset):
         Get the files from 
         '''
 
-        input_path=self.input_paths[index]
-        image=cv2.imread(input_path)
+        imagePath=self.imagePaths[index]
+        image=cv2.imread(imagePath)
         image=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
-        mask=cv2.imread(self.mask_paths[index],0)
+        mask=cv2.imread(self.maskPaths[index],0)
 
         if self.transforms is not None:
             image=self.transforms(image)
@@ -44,7 +44,7 @@ class DataSet(data.Dataset):
                     
 
 
-        return image,mask
+        return (image,mask)
 
 
     

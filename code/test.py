@@ -12,15 +12,12 @@ if __name__=="__main__":
 
     print(len(imagePaths))
 
-    image1=mpimg.imread(imagePaths[0])
+    image1=mpimg.imread(imagePaths[30])
     print(image1.shape)
-   
-
     plt.imshow(image1)
     plt.show()
     # print(imagePaths[0],maskPaths[0])
 
-    ass=np.ones(shape=(256,256,3))
     
     # img1=cv2.imread(imagePaths[0])  
     # win_name='image'

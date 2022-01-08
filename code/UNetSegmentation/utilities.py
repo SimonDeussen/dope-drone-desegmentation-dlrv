@@ -18,21 +18,21 @@ if torch.cuda.is_available():
 else:
     DEVICE="cpu"
     PIN_MEMORY=False        
-print(f"Available device is {DEVICE}")
+print(f"Available device is {DEVICE} of name {torch.cuda.get_device_name(torch.cuda.current_device())}\n")
 
 # define the number of channels in the input, number of classes,
 # and number of levels in the U-Net model
-NUM_CHANNELS = 1
+NUM_CHANNELS = 3
 NUM_CLASSES = 1
 NUM_LEVELS = 3
 # initialize learning rate, number of epochs to train for, and the
 # batch size
 INIT_LR = 0.001
-NUM_EPOCHS = 40
-BATCH_SIZE = 64
+NUM_EPOCHS = 100
+BATCH_SIZE = 32
 # define the input image dimensions
-INPUT_IMAGE_WIDTH = 128
-INPUT_IMAGE_HEIGHT = 128
+INPUT_IMAGE_WIDTH = 256
+INPUT_IMAGE_HEIGHT = 256
 # define threshold to filter weak predictions
 THRESHOLD = 0.5
 # define the path to the base output directory
