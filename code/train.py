@@ -41,7 +41,7 @@ trainDS = DataSet(imagePaths=trainImages, maskPaths=trainMasks,
 testDS = DataSet(imagePaths=testImages, maskPaths=testMasks,
     transforms=transforms)
 print(f"[INFO] found {len(trainDS)} examples in the training set...")
-print(f"[INFO] found {len(testDS)} examples in the test set...")
+print(f"[INFO] found {len(testDS)} examples in the validation set...")
 # create the training and test data loaders
 trainLoader = DataLoader(trainDS, shuffle=True,
 	batch_size=utilities.BATCH_SIZE, pin_memory=utilities.PIN_MEMORY,

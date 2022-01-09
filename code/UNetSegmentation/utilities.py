@@ -32,7 +32,7 @@ print(f"Available device is {DEVICE} of name {torch.cuda.get_device_name(torch.c
 # batch size
 INIT_LR = 0.001
 NUM_EPOCHS = 50
-BATCH_SIZE = 32 ## My  PC stop working at 128 
+BATCH_SIZE = 16 ## My  PC stop working at 128 
 # define the input image dimensions
 INPUT_IMAGE_WIDTH = 256
 INPUT_IMAGE_HEIGHT = 256
