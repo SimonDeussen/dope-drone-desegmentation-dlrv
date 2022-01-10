@@ -1,4 +1,6 @@
+from traceback import print_tb
 from UNetSegmentation import utilities
+from UNetSegmentation.model import *
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -19,12 +21,14 @@ def prepare_plot(origImage, origMask, predMask):
 	ax[2].set_title("Predicted Mask")
 	# set the layout of the figure and display it
 	figure.tight_layout()
-	figure.show()
+	# figure.show()
+	plt.show()
 
 def make_predictions(model, imagePath):
 	# set model to evaluation mode
 	model.eval()
 	# turn off gradient tracking
+	correct_train=0
 	with torch.no_grad():
 		# load the image from disk, swap its color channels, cast it
 		# to float data type, and scale its pixel values
@@ -37,13 +41,15 @@ def make_predictions(model, imagePath):
 		# find the filename and generate the path to ground truth
 		# mask
 		filename = imagePath.split(os.path.sep)[-1]
-		groundTruthPath = os.path.join(utilities.MASK_DATASET_PATH,
-			filename)
+		groundTruthPath = os.path.join(utilities.MASK_DATASET_PATH,filename)
+		groundTruthPath=groundTruthPath.replace("sat","mask")
+		print(f"mask path {groundTruthPath}")
 		# load the ground-truth segmentation mask in grayscale mode
 		# and resize it
 		gtMask = cv2.imread(groundTruthPath,0)
-		gtMask = cv2.resize(gtMask, (utilities.INPUT_IMAGE_HEIGHT,
-			utilities.INPUT_IMAGE_HEIGHT))
+		gtMask = cv2.resize(gtMask,dsize=(utilities.INPUT_IMAGE_HEIGHT,utilities.INPUT_IMAGE_WIDTH))
+		gtMask = cv2.resize(gtMask,dsize=(128,128))
+
 
 
         ##The tabs for this is uncertaing 
@@ -62,6 +68,8 @@ def make_predictions(model, imagePath):
 		# filter out the weak predictions and convert them to integers
 		predMask = (predMask > utilities.THRESHOLD) * 255
 		predMask = predMask.astype(np.uint8)
+		# correct_train += predMask.eq(gtMask.data).sum().item()
+
 		# prepare a plot for visualization
 		prepare_plot(orig, gtMask, predMask)
 
@@ -69,12 +77,16 @@ def make_predictions(model, imagePath):
 # image paths
 print("[INFO] loading up test image paths...")
 imagePaths = open(utilities.TEST_PATHS).read().strip().split("\n")
-imagePaths = np.random.choice(imagePaths, size=10)
+imagePaths = np.random.choice(imagePaths,size=10)
 # load our model from disk and flash it to the current device
 print("[INFO] load up model...")
 unet = torch.load(utilities.MODEL_PATH).to(utilities.DEVICE)
+# test_model_path="/home/malika/Documents/Bonn_Stuff/DLRV/Project/dope-drone-desegmentation-dlrv/code/output/unet_tgs_forest_plot_100_epochs_64channel.pth"
+# unet = torch.load(test_model_path).to(utilities.DEVICE)
+
 # iterate over the randomly selected test image paths
+count=0
 for path in imagePaths:
 	# make predictions and visualize the results
 	make_predictions(unet, path)
-
+	

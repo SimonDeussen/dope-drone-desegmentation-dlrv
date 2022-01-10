@@ -31,7 +31,7 @@ print(f"Available device is {DEVICE} of name {torch.cuda.get_device_name(torch.c
 # initialize learning rate, number of epochs to train for, and the
 # batch size
 INIT_LR = 0.001
-NUM_EPOCHS = 50
+NUM_EPOCHS = 100
 BATCH_SIZE = 16 ## My  PC stop working at 128 
 # define the input image dimensions
 INPUT_IMAGE_WIDTH = 256
@@ -42,7 +42,7 @@ THRESHOLD = 0.5
 BASE_OUTPUT = "output"
 # define the path to the output serialized model, model training
 # plot, and testing image paths
-MODEL_PATH = os.path.join(BASE_OUTPUT, "unet_model_forests.pth")
+MODEL_PATH = os.path.join(BASE_OUTPUT, "unet_tgs_forest_plot_100_epochs_64channel.pth")
 PLOT_PATH = os.path.sep.join([BASE_OUTPUT, "plot.png"])
 TEST_PATHS = os.path.sep.join([BASE_OUTPUT, "test_paths.txt"])
 
