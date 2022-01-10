@@ -98,8 +98,8 @@ class UNet(Module):
     '''
     The UNet architecture based on the sumodules 
     '''
-    def __init__(self,encChannels=(3, 16, 32, 64),
-		 decChannels=(64, 32, 16),
+    def __init__(self,encChannels=(3, 16, 32, 64,128,256),
+		 decChannels=(256,128,64, 32, 16),
 		 nbClasses=1, retainDim=True,
 		 outSize=(utilities.INPUT_IMAGE_HEIGHT,  utilities.INPUT_IMAGE_WIDTH)):
          super().__init__()
