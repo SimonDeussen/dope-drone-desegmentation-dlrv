@@ -1,7 +1,7 @@
 #Ignore data folder
-./code/data/images/*
-./code/data/masks/*
-./code/data/zain_results/*
+/code/data/images/*
+/code/data/masks/*
+/code/data/zain_results/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
