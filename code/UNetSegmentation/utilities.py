@@ -41,8 +41,8 @@ THRESHOLD = 0.5
 # define the path to the base output directory
 BASE_OUTPUT = "output"
 # define the path to the output serialized model, model training
-# plot, and testing image paths
-MODEL_PATH = os.path.join(BASE_OUTPUT, "unet_tgs_forest_plot_100_epochs_256channel.pth")
+# plot, and testing image paths unet_tgs_forest_plot_100_epochs_64channel / unet_tgs_forest_plot_100_epochs_256channel
+MODEL_PATH = os.path.join(BASE_OUTPUT, "unet_tgs_forest_plot_100_epochs_64channel.pth")
 PLOT_PATH = os.path.sep.join([BASE_OUTPUT, "plot.png"])
 TEST_PATHS = os.path.sep.join([BASE_OUTPUT, "test_paths.txt"])
 

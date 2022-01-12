@@ -6,6 +6,24 @@ import numpy as np
 import torch
 import cv2
 import os
+from torchmetrics import IoU
+
+def evaluate(groundTruth, prediction):
+
+	#Adding a smoothing operation to avoid division 0 error
+	EPS=1e-6
+	origMask=groundTruth.copy()
+	predMask=prediction.copy()
+
+
+	intersection=(predMask&origMask).sum((0,1))
+	union=(predMask | origMask).sum((0,1))
+	iou=(intersection+EPS)/(union+EPS)
+
+	print(f" The IOU is {iou}")
+
+	return iou
+
 
 
 def prepare_plot(origImage, origMask, predMask):
@@ -36,23 +54,20 @@ def make_predictions(model, imagePath):
 		image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 		image = image.astype("float32") / 255.0
 		# resize the image and make a copy of it for visualization
-		image = cv2.resize(image, (128, 128))
+		# image = cv2.resize(image, (128, 128))
 		orig = image.copy()
 		# find the filename and generate the path to ground truth
 		# mask
 		filename = imagePath.split(os.path.sep)[-1]
 		groundTruthPath = os.path.join(utilities.MASK_DATASET_PATH,filename)
+		#Change image path name to match the mask name
 		groundTruthPath=groundTruthPath.replace("sat","mask")
-		print(f"mask path {groundTruthPath}")
+		
 		# load the ground-truth segmentation mask in grayscale mode
 		# and resize it
 		gtMask = cv2.imread(groundTruthPath,0)
 		gtMask = cv2.resize(gtMask,dsize=(utilities.INPUT_IMAGE_HEIGHT,utilities.INPUT_IMAGE_WIDTH))
-		gtMask = cv2.resize(gtMask,dsize=(128,128))
-
-
-
-        ##The tabs for this is uncertaing 
+		# gtMask = cv2.resize(gtMask,dsize=(128,128))
 
         # make the channel axis to be the leading one, add a batch
 		# dimension, create a PyTorch tensor, and flash it to the
@@ -71,6 +86,7 @@ def make_predictions(model, imagePath):
 		# correct_train += predMask.eq(gtMask.data).sum().item()
 
 		# prepare a plot for visualization
+		evaluate(gtMask,predMask)
 		prepare_plot(orig, gtMask, predMask)
 
         # load the image paths in our testing file and randomly select 10
