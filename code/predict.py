@@ -6,7 +6,7 @@ import numpy as np
 import torch
 import cv2
 import os
-from torchmetrics import IoU
+from evaluate import evalution_metics
 
 def evaluate(groundTruth,prediction):
 
@@ -29,7 +29,7 @@ def evaluate(groundTruth,prediction):
 
 
 
-def prepare_plot(origImage, origMask, predMask):
+def prepare_plot(origImage, origMask, predMask,metric):
 	# initialize our figure
 	figure, ax = plt.subplots(nrows=1, ncols=3, figsize=(10, 10))
 	# plot the original image, its mask, and the predicted mask
@@ -44,11 +44,11 @@ def prepare_plot(origImage, origMask, predMask):
 
 	# set the layout of the figure and display it
 	figure.tight_layout()
-	figure.legend()
+	figure.suptitle(metric)
 	# figure.show()
 	plt.show()
 
-def make_predictions(model, imagePath):
+def make_predictions(model,imagePath,count):
 	# set model to evaluation mode
 	model.eval()
 	# turn off gradient tracking
@@ -92,14 +92,19 @@ def make_predictions(model, imagePath):
 		# correct_train += predMask.eq(gtMask.data).sum().item()
 
 		# prepare a plot for visualization
-		evaluate(gtMask,predMask)
-		prepare_plot(orig, gtMask, predMask)
+		iou,dice=evalution_metics(gtMask,predMask)
+		if count<5:
+			plot_title="IoU = "+np.array2string(np.round(iou),2)+"% Dice Score= "+np.array2string(np.round(dice,2))
+			prepare_plot(orig, gtMask, predMask,plot_title)
+
+
+	return iou,dice
 
         # load the image paths in our testing file and randomly select 10
 # image paths
 print("[INFO] loading up test image paths...")
 imagePaths = open(utilities.TEST_PATHS).read().strip().split("\n")
-imagePaths = np.random.choice(imagePaths,size=10)
+# imagePaths = np.random.choice(imagePaths,size=10)
 # load our model from disk and flash it to the current device
 print("[INFO] load up model...")
 unet = torch.load(utilities.MODEL_PATH).to(utilities.DEVICE)
@@ -108,7 +113,23 @@ unet = torch.load(utilities.MODEL_PATH).to(utilities.DEVICE)
 
 # iterate over the randomly selected test image paths
 count=0
+total_IoU=0
+max_IoU=0
+min_IoU=100
 for path in imagePaths:
 	# make predictions and visualize the results
-	make_predictions(unet, path)
+	IoU,dice=make_predictions(unet, path,count)
+	if IoU>max_IoU:
+		max_IoU=IoU
+
+	if IoU<min_IoU:
+		min_IoU=IoU
+	total_IoU+=IoU     
+
+	count+=1  
+
+average_iou=total_IoU/len(imagePaths)
+print(f"Average IoU is {average_iou} and max of {max_IoU} and min of {min_IoU}")
+
+
 	

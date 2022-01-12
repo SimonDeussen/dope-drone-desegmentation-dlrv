@@ -52,6 +52,7 @@ def prepare_plot(origImage, origMask, predMask,metric):
 def main():
 
     CURRENT_PATH=os.getcwd()
+
     DATASET_PATH=os.path.join(CURRENT_PATH,"data/zain_results")
     IMAGE_PATH=os.path.join(DATASET_PATH,"original_images")
     PREDICTIONS_PATH=os.path.join(DATASET_PATH,"predictions")
@@ -64,12 +65,20 @@ def main():
     maskPaths = sorted(list(paths.list_images(PREDICTIONS_PATH)))
 
     total_IoU=0
+    max_IoU=0
+    min_IoU=100
 
     for index in range(0,len(imagePaths)):
         oriImage=cv2.imread(imagePaths[index])
         groundTruthImage=cv2.imread(groundtruthPaths[index],0)
         maskImage=cv2.imread(maskPaths[index],0)
         IoU,dice=evalution_metics(groundTruthImage,maskImage)
+
+        if IoU>max_IoU:
+            max_IoU=IoU
+
+        if IoU<min_IoU:
+            min_IoU=IoU
         total_IoU+=IoU       
 
         if index<5:
@@ -80,7 +89,7 @@ def main():
 
 
     average_iou=total_IoU/len(imagePaths)
-    print(f"Average IoU is {average_iou}")
+    print(f"Average IoU is {average_iou} and max of {max_IoU} and min of {min_IoU}")
 
 
 
@@ -90,5 +99,7 @@ def main():
 
 if __name__=="__main__":
 
+    ##For original Unet use dataset =1
+    ##For ensemble dataset use dataset=2
     main()
     
