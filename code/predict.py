@@ -93,6 +93,7 @@ def make_predictions(model,imagePath,count):
 
 		# prepare a plot for visualization
 		iou,dice=evalution_metics(gtMask,predMask)
+		## Only plot the first 5 images
 		if count<5:
 			plot_title="IoU = "+np.array2string(np.round(iou),2)+"% Dice Score= "+np.array2string(np.round(dice,2))
 			prepare_plot(orig, gtMask, predMask,plot_title)
@@ -108,8 +109,6 @@ imagePaths = open(utilities.TEST_PATHS).read().strip().split("\n")
 # load our model from disk and flash it to the current device
 print("[INFO] load up model...")
 unet = torch.load(utilities.MODEL_PATH).to(utilities.DEVICE)
-# test_model_path="/home/malika/Documents/Bonn_Stuff/DLRV/Project/dope-drone-desegmentation-dlrv/code/output/unet_tgs_forest_plot_100_epochs_64channel.pth"
-# unet = torch.load(test_model_path).to(utilities.DEVICE)
 
 # iterate over the randomly selected test image paths
 count=0
