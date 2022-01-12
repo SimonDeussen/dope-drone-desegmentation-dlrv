@@ -8,7 +8,7 @@ import cv2
 import os
 from torchmetrics import IoU
 
-def evaluate(groundTruth, prediction):
+def evaluate(groundTruth,prediction):
 
 	#Adding a smoothing operation to avoid division 0 error
 	EPS=1e-6
@@ -18,9 +18,12 @@ def evaluate(groundTruth, prediction):
 
 	intersection=(predMask&origMask).sum((0,1))
 	union=(predMask | origMask).sum((0,1))
-	iou=(intersection+EPS)/(union+EPS)
+	iou=((intersection+EPS)/(union+EPS))*100
+	dice= 2.*(predMask*origMask).sum() / (predMask+origMask).sum()
 
-	print(f" The IOU is {iou}")
+	print(f" The IOU is {round(iou,2)}%")
+	print(f"The F1 score is {dice} \n")
+	# print(f"Intersections is {union} total pixles {total_pixels}")
 
 	return iou
 
@@ -37,8 +40,11 @@ def prepare_plot(origImage, origMask, predMask):
 	ax[0].set_title("Image")
 	ax[1].set_title("Original Mask")
 	ax[2].set_title("Predicted Mask")
+	
+
 	# set the layout of the figure and display it
 	figure.tight_layout()
+	figure.legend()
 	# figure.show()
 	plt.show()
 
