@@ -8,6 +8,7 @@ import cv2
 import os
 from evaluate import evalution_metics
 
+
 def evaluate(groundTruth,prediction):
 
 	#Adding a smoothing operation to avoid division 0 error
@@ -115,20 +116,39 @@ count=0
 total_IoU=0
 max_IoU=0
 min_IoU=100
+total_dice=0
+max_dice=0
+min_dice=100
 for path in imagePaths:
 	# make predictions and visualize the results
 	IoU,dice=make_predictions(unet, path,count)
+	## Saving max and min of dice and IoU
 	if IoU>max_IoU:
 		max_IoU=IoU
 
 	if IoU<min_IoU:
 		min_IoU=IoU
-	total_IoU+=IoU     
+
+	if dice>max_dice:
+		max_dice=dice
+
+	if dice<min_dice:
+		min_dice=dice
+
+	total_IoU+=IoU   
+	total_dice+=dice  
+
+
+
+
 
 	count+=1  
 
 average_iou=total_IoU/len(imagePaths)
+average_dice=total_dice/len(imagePaths)
 print(f"Average IoU is {average_iou} and max of {max_IoU} and min of {min_IoU}")
+print(f"Average Dice is {average_dice} and max of {max_dice} and min of {min_dice}")
+
 
 
 	
