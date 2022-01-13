@@ -8,7 +8,13 @@ from imutils import paths
 from UNetSegmentation import utilities
 import matplotlib.pyplot as plt
 
-
+def pixel_Accuracy(pred, label):
+    pixel_labeled = np.sum(label > 0)
+    #print(pixel_labeled)
+    pixel_correct = np.sum((pred == label) * (label > 0))
+    pixel_accuracy = 1.0 * pixel_correct / (pixel_labeled + 1e-10)
+    
+    return pixel_accuracy, pixel_correct, pixel_labeled
 
 
 def evalution_metics(groundTruth,prediction):
@@ -52,7 +58,7 @@ def prepare_plot(origImage, origMask, predMask,metric):
 def main():
 
     CURRENT_PATH=os.getcwd()
-
+    print(CURRENT_PATH)
     DATASET_PATH=os.path.join(CURRENT_PATH,"data/zain_results")
     IMAGE_PATH=os.path.join(DATASET_PATH,"original_images")
     PREDICTIONS_PATH=os.path.join(DATASET_PATH,"predictions")
@@ -62,17 +68,25 @@ def main():
 
     imagePaths = sorted(list(paths.list_images(IMAGE_PATH)))
     groundtruthPaths=sorted(list(paths.list_images(GROUNDTRUTH_PATH)))
-    maskPaths = sorted(list(paths.list_images(PREDICTIONS_PATH)))
+    predictionPaths = sorted(list(paths.list_images(PREDICTIONS_PATH)))
 
     total_IoU=0
     max_IoU=0
     min_IoU=100
-
+    pixel_accuracy=[]
+    pixel_correct=[]
+    pixel_labeled=[]
+    
     for index in range(0,len(imagePaths)):
         oriImage=cv2.imread(imagePaths[index])
         groundTruthImage=cv2.imread(groundtruthPaths[index],0)
-        maskImage=cv2.imread(maskPaths[index],0)
-        IoU,dice=evalution_metics(groundTruthImage,maskImage)
+        predictionImage=cv2.imread(predictionPaths[index],0)
+        IoU,dice=evalution_metics(groundTruthImage,predictionImage)
+        pix_acc, pix_corr, pix_labeled = pixel_Accuracy(predictionImage, groundTruthImage)
+        pixel_accuracy.append(pix_acc)
+        pixel_correct.append(pix_corr)
+        pixel_labeled.append(pix_labeled) 
+
 
         if IoU>max_IoU:
             max_IoU=IoU
@@ -85,11 +99,18 @@ def main():
             #Prnints only the first 4 plots
 
             plot_title="IoU = "+np.array2string(np.round(IoU),2)+"% Dice Score= "+np.array2string(np.round(dice,2))
-            prepare_plot(oriImage,groundTruthImage,maskImage,plot_title)
+            prepare_plot(oriImage,groundTruthImage,predictionImage,plot_title)
 
-
+    pixel_accuracy = np.array(pixel_accuracy)
+    pixel_correct = np.array(pixel_correct)
+    pixel_labeled = np.array(pixel_labeled)
+    acc = 100.0 * np.sum(pixel_correct) / (np.spacing(1) + np.sum(pixel_labeled))
+    
+    
     average_iou=total_IoU/len(imagePaths)
     print(f"Average IoU is {average_iou} and max of {max_IoU} and min of {min_IoU}")
+    
+    print(f"Mean pixel accuracy: {acc} %")
 
 
 
