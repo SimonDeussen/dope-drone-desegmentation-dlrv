@@ -67,6 +67,9 @@ def main():
     total_IoU=0
     max_IoU=0
     min_IoU=100
+    total_dice=0
+    max_dice=0
+    min_dice=100
 
     for index in range(0,len(imagePaths)):
         oriImage=cv2.imread(imagePaths[index])
@@ -79,9 +82,18 @@ def main():
 
         if IoU<min_IoU:
             min_IoU=IoU
-        total_IoU+=IoU       
+        
 
+        if dice>max_dice:
+            max_dice=dice
+
+        if dice<min_dice:
+            min_dice=dice
+
+        total_IoU+=IoU  
+        total_dice+=dice  
         if index<5:
+
             #Prnints only the first 4 plots
 
             plot_title="IoU = "+np.array2string(np.round(IoU),2)+"% Dice Score= "+np.array2string(np.round(dice,2))
@@ -89,7 +101,11 @@ def main():
 
 
     average_iou=total_IoU/len(imagePaths)
+    average_dice=total_dice/len(imagePaths)
+
     print(f"Average IoU is {average_iou} and max of {max_IoU} and min of {min_IoU}")
+    print(f"Average Dice is {average_dice} and max of {max_dice} and min of {min_dice}")
+
 
 
 
@@ -99,7 +115,6 @@ def main():
 
 if __name__=="__main__":
 
-    ##For original Unet use dataset =1
-    ##For ensemble dataset use dataset=2
+    ##The main file run the zain net 
     main()
     
