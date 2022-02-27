@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{hyperref}
+\usepackage{pdfpages}
 
 
 
@@ -13,7 +14,7 @@
 \title{Semantic Segmentation of aerial images of forest scenery}
 \author{Malika Navaratna, Urvashi Negi, Zain Ul Haq, Simon Deussen}
 \supervisors{Prof. Sebastian Houben}
-\date{February 2022}
+\date{February 2022(WS 2021)}
 
 
 \begin{document}
@@ -54,15 +55,17 @@ other greenery in the environment, so it becomes a difficult problem to distingu
         \begin{subfigure}{.5\textwidth}
           \centering
           \includegraphics[width=1.0\linewidth]{images/fig1.PNG}
-          \caption{Sample Image with Easily distinguishable regions}
+          \caption{Easily distinguishable regions}
           \label{fig:forest-easy}
         \end{subfigure}%
         \begin{subfigure}{.5\textwidth}
           \centering
-          \includegraphics[width=1.0\linewidth]{images/fig2}
-          \caption{Sample Image with difficult distinguishable regions}
+          \includegraphics[width=1.03\linewidth]{images/fig2}
+          \caption{Not easily distinguishable regions}
           \label{fig:forest-hard}
         \end{subfigure}
+        \caption{Sample data}
+        \label{fig:Sample data}
 \end{figure}
 
 
@@ -134,6 +137,12 @@ The last decoder goes through a 1x1 convolution with sigmoid activation. This fu
 \newpage
 \section{Methodology}
 
+\subsection{Steps and deliverables}
+
+The code for this project is available at \href{https://github.com/SimonDeussen/dope-drone-desegmentation-dlrv.git}{Deep Learning for segmentation}
+The instructions to run the code is written in the ReadMe file of the repository
+
+\vspace{10px}
 
 The adopted methodology involves semantic segmentation of the aerial images of forest using deep learning techniques 
 using ensembling of 3 different U-Net architectures with different backbones. The implementation consists of 4 major steps as shown in Figure \ref{fig:steps}. 
@@ -154,7 +163,17 @@ classification track in \href{https://www.kaggle.com/balraj98/deepglobe-land-cov
 . Each image has been provided with a binary mask image as label for the image the defines region of interest to distinguish between forest and non-forest regions 
 in the image.
 
-The size of the data set was increased by creating augmented images of the data set. The resulting data set contained 25,540 images. 
+The size of the data set was increased by creating augmented images of the data set. The resulting data set contained 25,540 images. The following data augmentations 
+were done 
+\begin{itemize}
+        \item Rotation randomly between -180 and 180 degrees
+        \item Horizontal flip
+        \item Vertical flip
+        \item Vertical shift randomly between -64 and 64
+        \item Horizontal shift randomly between -64 and 64
+\end{itemize}
+
+Each of the above 5 augmentations were performed on all the images and hence the data set was increased five fold
 
 \subsection{Model learning}
 
@@ -263,7 +282,7 @@ Following random combination of weights are selected to get the weighted average
 w1 =0.3 ,  w2= 0.5 ,  w3= 0.2
 A best combination of weights for each model is selected that gives best result on prediction on individual prediction of each model. 
 A combination of weighted average of model gives the final prediction, using equation 1
-                    $$P=  w1*p1 + w2*p2 + w3*p3   $$                                                                   (1)
+                    $$P=  w1*p1 + w2*p2 + w3*p3   $$
 Where
 P= final prediction 
 P1 = prediction by model 1 
@@ -277,7 +296,7 @@ P3 = prediction by model 3
 The presented approach is evaluated for its accuracy of distinguishing forest regions from non-forest regions in the aerial images. The model tested on already separated test from original dataset consists of 500 images. At test time the implemented model produces for given image a binary image with two regions defined as forest and non-forest images. These predicted binary images are then compared with the provided labels to calculate pixel wise results. IoU factor is used for evaluating the predicted region with provided one. 
 IoU is measured using following mathematical relation:
 
-$$IOU=\frac{Intersection_area}{Total_area }$$
+$$IOU=\frac{Intersection\;area}{Total\;area }$$
 IoU scores can further be converted to mean average precision, but further analysis is not performed due to time constraints. 
 
 
@@ -288,10 +307,22 @@ labeling of the dataset. Visual inspection of the predicted images has shown bet
 low accuracy score the trained model gives acceptable results for real application. IoU score calculated over all 
 three models and ensemble model are as following:
 Following are the mean IoU obtained for each individual model as well as using the ensembled model.
+\vspace{10px}
+
 IOU Score for model1 =  0.6515429
+
+\vspace{3px}
+
 IOU Score for model2 =  0.6777154
+
+\vspace{3px}
 IOU Score for model3 =  0.67442536
+
+\vspace{3px}
+
 IOU Score for weighted average ensemble =  0.68797314 
+
+\vspace{3px}
 Since the provided ground truth data was poorly labelled as can be seen in the (Testing label ) in figure 9-10 hence IoU score did not provided got score 
 despite the fact visual inspection showed extremely impressive prediction of the forest and non-forest regions as shown in 
 Figure \ref{fig: Predictions with Good IoU scores} and \ref{fig: Prediction with Bad IoU scores}
@@ -323,13 +354,9 @@ notion of learning useful object in the real-world images. Training on aerial im
 \section{Appendix}
 
 
-\textbf{Model 1 (U-Net with res34 backbone}
-\vspace{10px}
-\begin{figure}[htp] 
-        \centering
-        \includegraphics[width=1.2\textwidth]{images/fig13.png}
-        \caption{ Predictions with Good  IoU scores}%
-        \label{fig: Predictions with Good  IoU scoresS}%
-\end{figure}
+\textbf{Please see next page}
+
+\includepdf[pages=-]{appendix.pdf}
+
  
 \end{document}
