@@ -342,11 +342,41 @@ Figure \ref{fig: Predictions with Good IoU scores} and \ref{fig: Prediction with
 \end{figure}
 
 
+\vspace{20px}
+
 
 The main rule has been played by the weight initialization using ImageNet trained weights. The models with weights trained on ImageNet has already learned the 
 notion of learning useful object in the real-world images. Training on aerial images further allowed the model to adapt according to the required image regions. 
 
-Given below are some of the more 
+Given below are some example of comparing the mask to the predictions. The figure \ref{fig:better_pred} shows samples that closely match the masks while the 
+figure \ref{fig:worse_pred} shows cases which are far from the mask values.
+
+
+\begin{figure}[htp] 
+        \centering
+        \includegraphics[width=1.2\textwidth]{images/fig15_better_pred.png}
+        \caption{Prediction close to ground truth mask}%
+        \label{fig:better_pred}%
+\end{figure}
+
+\begin{figure}[htp] 
+        \centering
+        \includegraphics[width=1.2\textwidth]{images/fig16_worse_pred.png}
+        \caption{Prediction far from ground truth mask}%
+        \label{fig:worse_pred}%
+\end{figure}
+
+\vspace{20px}
+
+Yet the most interesting ones are in the figure \ref{fig:interest_pred} which shows cases where the predictions seems to be better than the masks 
+themselves. The masks seems to be lazily annotated while the network make better Predictions.
+
+\begin{figure}[htp] 
+        \centering
+        \includegraphics[width=1.2\textwidth]{images/fig17_interesting.png}
+        \caption{Interesting predictions}%
+        \label{fig:interest_pred}%
+\end{figure}
 
 \newpage
 \bibliographystyle{ieeetr} % Use the plainnat bibliography style
