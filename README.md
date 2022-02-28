@@ -20,3 +20,9 @@ The data set used for this project can be found at https://www.kaggle.com/balraj
 2. Go to "notebooks/U-net with backbones.ipynb" 
     - First change the path to ground truth and masks
 3. Then run the file using jupyter-notebook or similar software
+
+<h3>Documents located in the folder doc :<h3>
+    1. Developer journal
+    2. Final Presentation (presented on 13.01.2022)
+    3. Project Proposal 
+    4. Project Report
