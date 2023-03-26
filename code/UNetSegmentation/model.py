@@ -16,19 +16,14 @@ class Block(Module):
                 inChannels,
                 outChannels):
         super().__init__()
-        self.conv1=Conv2d(inChannels,outChannels,3)
-        self.relu=ReLU()
-        self.conv2=Conv2d(outChannels,outChannels,3)
-
-
+        self.conv1 = Conv2d(inChannels, outChannels, 3)
+        self.relu = ReLU()
+        self.conv2 = Conv2d(outChannels, outChannels, 3)
     def forward(self,x):
         '''
         Applies the two convolutions and return it
-        
         '''
         return self.conv2(self.relu(self.conv1(x)))
-
-
 class Encoder(Module):
     def __init__(self,channels: tuple):
         super().__init__()
@@ -127,9 +122,3 @@ class UNet(Module):
             map = F.interpolate(map, self.outSize)
 		# return the segmentation map
         return map
-
-
-
-		
-
-
